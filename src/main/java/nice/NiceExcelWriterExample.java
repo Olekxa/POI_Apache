@@ -1,5 +1,7 @@
-import model.Book;
-import write.TableWriter;
+package nice;
+
+import nice.model.Book;
+import nice.write.TableWriter;
 
 import java.io.IOException;
 import java.util.List;

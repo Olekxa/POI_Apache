@@ -1,6 +1,6 @@
-package write;
+package nice.write;
 
-import model.Book;
+import nice.model.Book;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -25,6 +25,7 @@ public class TableWriter {
         int rowCount = 0;
 
         for (Book aBook : listBook) {
+            sheet.autoSizeColumn(rowCount);
             Row row = sheet.createRow(++rowCount);
             writeBook(aBook, row);
         }

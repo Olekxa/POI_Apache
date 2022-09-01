@@ -1,6 +1,6 @@
-package read;
+package read.read;
 
-import model.Country;
+import read.model.Country;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -15,20 +15,15 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ReadExcelFileToList {
-    public static List<Country> readExcelData(String fileName) {
-        List<Country> countriesList = new ArrayList<Country>();
+    public static List<Country> readExcelData(String fileName) throws IOException {
+        List<Country> countriesList = new ArrayList<>();
 
-        try {
-            //Create the input stream from the xlsx/xls file
-            FileInputStream fis = new FileInputStream(fileName);
+        //Create the input stream from the xlsx/xls file
+        try (FileInputStream fis = new FileInputStream(fileName)) {
 
+            Workbook workbook = new XSSFWorkbook(fis);
             //Create Workbook instance for xlsx/xls file input stream
-            Workbook workbook = null;
-            if (fileName.toLowerCase().endsWith("xlsx")) {
-                workbook = new XSSFWorkbook(fis);
-            } else if (fileName.toLowerCase().endsWith("xls")) {
-                workbook = new HSSFWorkbook(fis);
-            }
+            ;
 
             //Get the number of sheets in the xlsx file
             int numberOfSheets = workbook.getNumberOfSheets();
@@ -72,21 +67,15 @@ public class ReadExcelFileToList {
                                 System.out.println("Random data::" + cell.getNumericCellValue());
                         }
                     } //end of cell iterator
-                    Country c = new Country(name, shortCode);
-                    countriesList.add(c);
+                    if (!(name.equals("") && shortCode.equals(""))) {
+                        Country c = new Country(name, shortCode);
+                        countriesList.add(c);
+                    }
+
                 } //end of rows iterator
 
-
             } //end of sheets for loop
-
-            //close file input stream
-            fis.close();
-
-        } catch (
-                IOException e) {
-            e.printStackTrace();
         }
-
         return countriesList;
     }
 }

@@ -1,4 +1,4 @@
-package model;
+package nice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
